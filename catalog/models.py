@@ -2,7 +2,8 @@ from django.db import models
 
 class Category(models.Model):
     name = models.CharField(max_length=50, verbose_name="Наименование")
-    description = models.TextField(verbose_name="Описание")
+    slug = models.SlugField(unique=True)
+    description = models.TextField(blank=True, verbose_name="Описание")
 
     class Meta:
         verbose_name = "Категория"

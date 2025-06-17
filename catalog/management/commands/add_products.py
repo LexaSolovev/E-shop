@@ -42,6 +42,7 @@ class Command(BaseCommand):
                 category = Category.objects.create(
                     pk=item['pk'],
                     name=item['fields']['name'],
+                    slug=item['fields']['slug'],
                     description=item['fields']['description']
                 )
                 categories[item['pk']] = category

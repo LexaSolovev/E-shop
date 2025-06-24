@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "e-shop"
+version = "0.1.0"
+description = ""
+authors = ["Alexey Solovyev <solovaa@yandex.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.2.1"
+python-dotenv = "^1.1.0"
+psycopg2-binary = "^2.9.10"
+pillow = "^11.2.1"
+ipython = "^9.3.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

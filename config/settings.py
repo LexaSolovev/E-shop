@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'catalog',
     'blog',
     'users',
+    'phonenumber_field',
+    'django_countries'
 ]
 
 MIDDLEWARE = [

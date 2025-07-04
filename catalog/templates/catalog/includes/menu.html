@@ -12,6 +12,11 @@
                     <h4>
                     <form method="post" action="{% url 'users:logout' %}">
                       {% csrf_token %}
+                      <h4>
+                          <p>Вы вошли как</p>
+                          <h3>{{ user.email }}</h3>
+                          <p>Добро пожаловать на сайт!</p>
+                      </h4>
                       <button type="submit">Выйти</button>
                     </form>
                     {% else %}

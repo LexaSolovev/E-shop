@@ -12,6 +12,8 @@ python-dotenv = "^1.1.0"
 psycopg2-binary = "^2.9.10"
 pillow = "^11.2.1"
 ipython = "^9.3.0"
+django-phonenumber-field = {extras = ["phonenumbers"], version = "^8.1.0"}
+django-countries = "^7.6.1"
 
 
 [build-system]

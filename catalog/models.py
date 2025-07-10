@@ -21,11 +21,15 @@ class Product(models.Model):
     price = models.DecimalField(verbose_name="Цена", max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name="Дата последнего изменения", auto_now=True)
+    is_published = models.BooleanField(verbose_name="Опубликовано", default=False, blank=True, null=True)
 
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ['name']
+        permissions = [
+            ('can_unpublish_product','Can unpublish product'),
+        ]
 
     def __str__(self):
         return self.name

@@ -28,6 +28,11 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     template_name = 'catalog/product_form.html'
     success_url = reverse_lazy('catalog:product_list')
 
+    def form_valid(self, form):
+        """Устанавливаем владельца перед сохранением"""
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
 
 class OwnerRequiredMixin(UserPassesTestMixin):
     """Миксин для проверки владельца продукта"""

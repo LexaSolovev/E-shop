@@ -45,3 +45,6 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def can_change(self, user):
+        return self.owner == user and user.has_perm("change_product")

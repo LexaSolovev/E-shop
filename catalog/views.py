@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.urls import reverse_lazy
@@ -27,7 +28,19 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     template_name = 'catalog/product_form.html'
     success_url = reverse_lazy('catalog:product_list')
 
-class ProductUpdateView(LoginRequiredMixin, UpdateView):
+
+class OwnerRequiredMixin(UserPassesTestMixin):
+    """Миксин для проверки владельца продукта"""
+
+    def test_func(self):
+        product = self.get_object()
+        return product.can_change(self.request.user)
+
+    def handle_no_permission(self):
+        raise PermissionDenied("У вас нет прав для редактирования этого продукта")
+
+
+class ProductUpdateView(LoginRequiredMixin, OwnerRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = 'catalog/product_form.html'

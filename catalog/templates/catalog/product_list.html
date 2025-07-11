@@ -16,8 +16,16 @@
         <h5 class="card-title">{{ product.name }}</h5>
         <p class="card-text">{{ product.price }} ₽</p>
         <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-sm btn-outline-secondary">Подробнее</a>
-        <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-sm btn-warning">Редактировать</a>
-        <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-sm btn-danger">Удалить</a>
+        {% if product.owner == user %}
+        <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-warning">
+          Редактировать
+        </a>
+        {% endif %}
+        {% if perms.delete_product %}
+        <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-sm btn-danger">
+          Удалить
+        </a>
+        {% endif %}
       </div>
     </div>
   </div>

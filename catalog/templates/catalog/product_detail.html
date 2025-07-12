@@ -20,8 +20,22 @@
       <p class="lead">{{ product.description }}</p>
       <div class="d-flex gap-2">
         <a href="{% url 'catalog:product_list' %}" class="btn btn-secondary">← Назад</a>
-        <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-warning">Редактировать</a>
-        <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-danger">Удалить</a>
+        {% if product.owner == user and perms.change_product %}
+        <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-warning">
+          Редактировать
+        </a>
+        {% endif %}
+        {% if perms.catalog.can_unpublish_product and product.is_published %}
+        <a href="{% url 'catalog:unpublish_product' product.pk %}" class="btn btn-warning">
+          Снять с публикации
+        </a>
+        {% endif %}
+
+        {% if perms.delete_product %}
+        <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-danger">
+          Удалить
+        </a>
+        {% endif %}
       </div>
     </div>
   </div>

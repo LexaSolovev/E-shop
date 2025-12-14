@@ -1,0 +1,66 @@
+<header data-bs-theme="dark">
+    <div class="collapse text-bg-dark" id="navbarHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                    <h4>О нас</h4>
+                    <p class="text-body-secondary">Информация о нашем магазине и предлагаемых товарах.</p>
+                </div>
+                <div class="col-sm-4 offset-md-1 py-4">
+                    <h4><a href="{% url 'catalog:contacts' %}" class="text-white">Контакты</a></h4>
+                    {% if user.is_authenticated %}
+                    <div class="mb-3">
+                        <p class="text-white mb-1">Вы вошли как</p>
+                        <h5 class="text-white">{{ user.email }}</h5>
+                        <form method="post" action="{% url 'users:logout' %}" class="mt-2">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-outline-light">Выйти</button>
+                        </form>
+                    </div>
+                    {% else %}
+                    <div class="d-flex flex-column gap-2">
+                        <a href="{% url 'users:login' %}" class="btn btn-outline-light">Вход</a>
+                        <a href="{% url 'users:register' %}" class="btn btn-outline-light">Регистрация</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <div class="d-flex flex-grow-1">
+                <a href="{% url 'catalog:product_list' %}" class="navbar-brand">
+                    <strong>Мой Магазин</strong>
+                </a>
+                <a href="{% url 'blog:post_list' %}" class="navbar-brand">
+                    <strong>Блог</strong>
+                </a>
+
+                <!-- Выпадающее меню категорий -->
+                <div class="dropdown">
+                    <button class="btn btn-dark dropdown-toggle" type="button" id="categoriesDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        Фильтр по категории
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="categoriesDropdown">
+                        {% for category in categories %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'catalog:category_products' category.slug %}">
+                                {{ category.name }}
+                            </a>
+                        </li>
+                        {% empty %}
+                        <li><span class="dropdown-item text-muted">Нет категорий</span></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
+                    aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+</header>
